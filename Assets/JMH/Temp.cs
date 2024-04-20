@@ -8,5 +8,7 @@ public class Temp : MonoBehaviour
     {
         Managers managers = Managers.instance;
         //Managers.Resource.Instantiate("UI/UI_Button");
+
+        UI_Popup ui = Managers.UI.ShowPopupUI<UI_Button>();
     }
 }

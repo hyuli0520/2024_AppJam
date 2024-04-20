@@ -9,8 +9,10 @@ public class Managers : MonoBehaviour
 
     #region Managers
     ResourceManager _resource = new ResourceManager();
+    UIManager _ui = new UIManager();
 
     public static ResourceManager Resource { get { return instance._resource; } }
+    public static UIManager UI { get { return instance._ui; } }
     #endregion
 
     void Start()
@@ -22,15 +24,15 @@ public class Managers : MonoBehaviour
     {
         if(s_Instance == null)
         {
-            GameObject obj = GameObject.Find("@Managers");
-            if(obj == null)
+            GameObject go = GameObject.Find("@Managers");
+            if(go == null)
             {
-                obj = new GameObject { name = "@Managers" };
-                obj.AddComponent<Managers>();
+                go = new GameObject { name = "@Managers" };
+                go.AddComponent<Managers>();
             }
 
-            DontDestroyOnLoad(obj);
-            s_Instance = obj.GetComponent<Managers>();
+            DontDestroyOnLoad(go);
+            s_Instance = go.GetComponent<Managers>();
         }
     }
 }
