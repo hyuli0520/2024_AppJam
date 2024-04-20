@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    private SpriteRenderer sprite;
+
     private int _curTile;
     private int _tileCount;
 
@@ -11,6 +13,8 @@ public class Player : MonoBehaviour
 
     private void Start()
     {
+        sprite = GetComponent<SpriteRenderer>();
+
         _tileCount = GameManager.Instance._tile.Count;
         _curTile = _tileCount / 2;
 
@@ -27,6 +31,7 @@ public class Player : MonoBehaviour
                     _curTile++;
 
                 transform.position = tilePos();
+                sprite.flipX = true;
             }
 
             if (Input.GetKeyDown(KeyCode.D))
@@ -35,6 +40,7 @@ public class Player : MonoBehaviour
                     _curTile--;
 
                 transform.position = tilePos();
+                sprite.flipX = false;
             }
 
             _isMove = false;

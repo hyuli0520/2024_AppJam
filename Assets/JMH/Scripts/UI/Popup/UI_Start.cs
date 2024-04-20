@@ -11,14 +11,12 @@ public class UI_Start : UI_Popup
     {
         StartButton,
         ExitButton,
-        CloseSettingButton,
     }
 
     enum Texts
     {
         StartText,
         ExitText,
-        CloseSettingText,
     }
 
     enum Images
@@ -28,7 +26,7 @@ public class UI_Start : UI_Popup
 
     enum GameObjects
     {
-        SettingPanel,
+
     }
 
     private void Start()
@@ -47,9 +45,6 @@ public class UI_Start : UI_Popup
 
         GetButton((int)Buttons.StartButton).gameObject.AddUIEvent(OnClickStartButton);
         GetButton((int)Buttons.ExitButton).gameObject.AddUIEvent(OnClickExitButton);
-        GetButton((int)Buttons.CloseSettingButton).gameObject.AddUIEvent(OnClickCloseSettingButton);
-
-        Get<GameObject>((int)GameObjects.SettingPanel).gameObject.SetActive(false);
     }
 
     void OnClickStartButton(PointerEventData data)
@@ -59,9 +54,5 @@ public class UI_Start : UI_Popup
     void OnClickExitButton(PointerEventData data)
     {
         Application.Quit();
-    }
-    void OnClickCloseSettingButton(PointerEventData data)
-    {
-        Get<GameObject>((int)GameObjects.SettingPanel).gameObject.SetActive(false);
     }
 }
