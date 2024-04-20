@@ -57,12 +57,8 @@ public class UI_Main : UI_Popup
         GetButton((int)Buttons.RetryButton).gameObject.AddUIEvent(OnClickRetry);
     }
 
-    public void OnDeleteHp(PointerEventData data)
+    public void OnDeleteHp()
     {
-        Managers.UI.playerHp--;
-
-        Debug.Log($"버튼 클릭됨 남은 체력 : {Managers.UI.playerHp}");
-
         if (Managers.UI.playerHp == 2)
             GetImage((int)Images.PlayerHp3).gameObject.SetActive(false);
         if (Managers.UI.playerHp == 1)
@@ -72,12 +68,15 @@ public class UI_Main : UI_Popup
             GetImage((int)Images.PlayerHp1).gameObject.SetActive(false);
             Get<GameObject>((int)GameObjects.Alive).SetActive(false);
             Get<GameObject>((int)GameObjects.Dead).SetActive(true);
+            Time.timeScale = 0;
         }
 
     }
     public void OnClickRetry(PointerEventData data)
     {
-        Debug.Log("Retry");
+        Managers.Scene.LoadScene(Define.Scene.Start);
+        Time.timeScale = 1;
+        Managers.UI.playerHp = 3;
     }
 
 }

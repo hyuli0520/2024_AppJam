@@ -13,6 +13,8 @@ public class Monster : MonoBehaviour
     public bool _isStop = false;
     public Vector3 _curPos;
 
+    public UI_Main ui_Main;
+
     private Player _player;
     private MainHp _main;
 
@@ -28,6 +30,7 @@ public class Monster : MonoBehaviour
     {
         _player = FindObjectOfType<Player>();
         _main = FindObjectOfType<MainHp>();
+        ui_Main = FindObjectOfType<UI_Main>();
         _isStop = false;
 
         StartCoroutine(MonsterMove());
@@ -91,15 +94,10 @@ public class Monster : MonoBehaviour
             yield return new WaitUntil(() => _isAttMain);
             yield return new WaitUntil(() => GameManager.Instance._isClick);
 
-            //Managers.UI.playerHp--;
+            Managers.UI.playerHp--;
+            ui_Main.OnDeleteHp();
 
             Destroy(this.gameObject);
-
-            if (Managers.UI.playerHp == 0)
-            {
-                Managers.Scene.LoadScene(Define.Scene.Start);
-                yield break;
-            }
 
             yield return new WaitForSeconds(_stopTime);
         }
