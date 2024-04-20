@@ -9,12 +9,10 @@ EditorBuildSettings:
     path: Assets/00.Scenes/SampleScene.unity
     guid: 2cda990e2423bbf4892e6590ba056729
   - enabled: 1
-    path: Assets/JMH/Scenes/Start.unity
-    guid: f514529c5eb9d904b9781e6971eb09f5
+    path: Assets/00.Scenes/Pwh/Ending.unity
+    guid: ad579e78827be704296f637c855eefa1
   - enabled: 1
-    path: Assets/JMH/Scenes/Game.unity
-    guid: f1e682be43427be4582182a2c73f7455
-  - enabled: 1
-    path: Assets/JMH/Scenes/Rank.unity
-    guid: 386250c64246442468039a2f19034c03
+    path: Assets/00.Scenes/Pwh/Pwh.unity
+    guid: 2b5b54bf20059c34c8484690482e1b8c
+
   m_configObjects: {}

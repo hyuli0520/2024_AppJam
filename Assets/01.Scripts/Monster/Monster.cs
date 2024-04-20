@@ -1,75 +1,113 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening;
+using UnityEngine.SceneManagement;
 
 public class Monster : MonoBehaviour
 {
-    [Header("참조")]
-    [SerializeField] private Transform _main;
 
     [Header("수치")]
     [SerializeField] private float _stopTime;
     [SerializeField] private float _stunTime;
-    [SerializeField] private float _jumpPower;
 
-    private RaycastHit2D hit;
-    private bool _isStop;
+    public bool _isStop = false;
+    public Vector3 _curPos;
+
+    private Player _player;
+    private MainHp _main;
+    private bool _isAtt = false;
+    private bool _isMiss = false;
+    private bool _isAttMain = false;
+
+    private void Awake()
+    {
+    }
 
     private void Start()
     {
+        _player = FindObjectOfType<Player>();
+        _main = FindObjectOfType<MainHp>();
+
+        _isStop = false;
         StartCoroutine(MonsterMove());
+        StartCoroutine(DamageToPlayer());
+        StartCoroutine(DamageToMain());
     }
 
     IEnumerator MonsterMove()
     {
+
         while (true)
         {
-            yield return new WaitWhile(() => _isStop);
             yield return new WaitForSeconds(_stopTime);
 
-            if(!_isStop)
+            if (!_isStop)
             {
+                Vector3 toPlayer = (_main.transform.position - transform.position).normalized;
 
-            Vector3 toPlayer = (_main.position - transform.position).normalized;
+                if (toPlayer.x > 0)
+                    toPlayer.x = Mathf.Ceil(toPlayer.x);
+                else
+                    toPlayer.x = Mathf.FloorToInt(toPlayer.x);
+                toPlayer *= 2;
+                toPlayer.y = 0;
 
-            toPlayer *= 3;
-            toPlayer.y = 0;
-
-            transform.position += toPlayer;
-            _isStop = false;
+                transform.position += toPlayer;
+                _isStop = false;
             }
-            //transform.DOJump(toPlayer, _jumpPower, 1, 0.3f)
-            //        .SetEase(Ease.OutQuad);
-
         }
     }
 
     private void Update()
     {
+        _curPos = transform.position;
         StopRay();
     }
 
     private void StopRay()
     {
-        Vector3 toPlayer = (_main.position - transform.position).normalized;
-        toPlayer.y = 0;
-        Vector3 newVec = new Vector3(toPlayer.x * 0.6f, 0, 0);
-        print(toPlayer);
-        hit = Physics2D.Raycast(transform.position + newVec, toPlayer, 10f);
-        Debug.DrawRay(transform.position + newVec, toPlayer, Color.red, 1f);
+        float dis = Vector3.Distance(_main.transform.position, transform.position);
+        float playerDis = Vector3.Distance(_player.transform.position, transform.position);
 
-        if (hit)
+        if (playerDis < 3f && !_isMiss)
         {
-            if (hit.rigidbody.TryGetComponent(out Player player))
-                player.Damage();
-
-            if(hit.rigidbody.CompareTag("Main"))
-            {
-                //게임 종료 경우
-            }
-
             _isStop = true;
+            _isAtt = true;
+        }
+        else if (dis < 3f)
+        {
+            //게임 종료
+            _isStop = true;
+            _isAttMain = true;
+        }
+        else
+            _isStop = false;
+    }
+
+    IEnumerator DamageToMain()
+    {
+        while (true)
+        {
+            yield return new WaitUntil(() => _isAttMain);
+            yield return new WaitForSeconds(_stunTime);
+
+            SceneManager.LoadScene("Ending");
+
+            yield break;
+        }
+    }
+
+    IEnumerator DamageToPlayer()
+    {
+        while (true)
+        {
+            yield return new WaitUntil(() => _isAtt);
+            yield return new WaitForSeconds(_stunTime);
+
+            _player.Damage();
+            _isMiss = true;
+
+            yield break;
         }
     }
 }
