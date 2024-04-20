@@ -10,23 +10,28 @@ public enum State
     Ending
 }
 
-public class GameManager : MonoBehaviour
+public class GameManager : MonoSingleton<GameManager>
 {
-    public static GameManager instance;
     public State curState;
 
-    public bool _isClick = false;
+    public List<Transform> _tile;
+    public List<Monster> _monsters;
 
-    private void Start()
-    {
-        instance = this;
-    }
+    public bool _isClick = false;
 
     public void NextState(State state)
     {
         int next = ((int)state + 1) % 4;
 
         curState = (State)next;
+    }
 
+    public void ReMoveTile()
+    {
+        if(_tile.Count >= 2)
+        {
+            _tile.RemoveAt(0);
+            _tile.RemoveAt(_tile.Count - 1);
+        }
     }
 }

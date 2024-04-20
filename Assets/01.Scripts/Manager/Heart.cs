@@ -12,14 +12,12 @@ public class Heart : MonoBehaviour
     [SerializeField] private GameObject _rHeartPrefab;
     [SerializeField] private Transform _lHeart;
     [SerializeField] private Transform _rHeart;
+    [SerializeField] private PlayerAtt playerAttack;
 
     [Header("¼öÄ¡")]
     [SerializeField] private float _createTime;
     [SerializeField] private float _moveTime;
     [SerializeField] private float _distance;
-
-    private GameObject _left;
-    private GameObject _right;
 
     void Start()
     {
@@ -60,8 +58,14 @@ public class Heart : MonoBehaviour
         float disance = Vector2.Distance(heart.transform.position, target.position);
 
         if (disance <= 0)
+        {
             Destroy(heart);
+            GameManager.Instance._isClick = false;
+        }
         else if (disance < _distance)
-            GameManager.instance._isClick = true;
+        {
+            playerAttack.MouseClick();
+            GameManager.Instance._isClick = true;
+        }
     }
 }

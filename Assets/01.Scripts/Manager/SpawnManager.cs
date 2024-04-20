@@ -6,7 +6,7 @@ public class SpawnManager : MonoBehaviour
 {
     [Header("참조")]
     [SerializeField] private Transform[] _MonsterSpawnPos;
-    [SerializeField] private GameObject _monster;
+    [SerializeField] private Monster _monster;
 
     [Header("수치")]
     [SerializeField] private float _spawnTime;
@@ -31,7 +31,9 @@ public class SpawnManager : MonoBehaviour
     {
         int randIdx = Random.Range(0, 2);
 
-        Instantiate(_monster);
-        _monster.transform.position = _MonsterSpawnPos[randIdx].position;
+        Monster monster = Instantiate(_monster);
+        monster.transform.position = _MonsterSpawnPos[randIdx].position;
+
+        GameManager.Instance._monsters.Add(monster);
     }
 }
