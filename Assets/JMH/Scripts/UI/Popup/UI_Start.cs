@@ -10,7 +10,6 @@ public class UI_Start : UI_Popup
     enum Buttons
     {
         StartButton,
-        SettingButton,
         ExitButton,
         CloseSettingButton,
     }
@@ -18,7 +17,6 @@ public class UI_Start : UI_Popup
     enum Texts
     {
         StartText,
-        SettingText,
         ExitText,
         CloseSettingText,
     }
@@ -48,7 +46,6 @@ public class UI_Start : UI_Popup
         Bind<GameObject>(typeof(GameObjects));
 
         GetButton((int)Buttons.StartButton).gameObject.AddUIEvent(OnClickStartButton);
-        GetButton((int)Buttons.SettingButton).gameObject.AddUIEvent(OnClickSettingButton);
         GetButton((int)Buttons.ExitButton).gameObject.AddUIEvent(OnClickExitButton);
         GetButton((int)Buttons.CloseSettingButton).gameObject.AddUIEvent(OnClickCloseSettingButton);
 
@@ -58,10 +55,6 @@ public class UI_Start : UI_Popup
     void OnClickStartButton(PointerEventData data)
     {
         Managers.Scene.LoadScene(Define.Scene.Game);
-    }
-    void OnClickSettingButton(PointerEventData data)
-    {
-        Get<GameObject>((int)GameObjects.SettingPanel).gameObject.SetActive(true);
     }
     void OnClickExitButton(PointerEventData data)
     {

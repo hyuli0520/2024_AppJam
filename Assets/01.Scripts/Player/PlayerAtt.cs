@@ -10,9 +10,12 @@ public class PlayerAtt : MonoBehaviour
     private float _delaytime = 0;
     private Monster _disMonster;
 
+    private Animator anim;
+
     private void Start()
     {
      //   StartCoroutine(Att());
+        anim = GetComponent<Animator>();
     }
 
     IEnumerator Att()
@@ -31,7 +34,10 @@ public class PlayerAtt : MonoBehaviour
     {
         print("ss");
         if (Input.GetMouseButtonDown(0))
+        {
             FindNealMonster();
+            anim.SetTrigger("isAtk");
+        }
     }
 
     private void FindNealMonster()
