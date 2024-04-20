@@ -19,7 +19,7 @@ public class UI_Base : MonoBehaviour
         for (int i = 0; i < names.Length; i++)
         {
             if (typeof(T) == typeof(GameObject))
-                objects[i] = Util.FindChild<GameObject>(gameObject, names[i], true);
+                objects[i] = Util.FindChild(gameObject, names[i], true);
             else
                 objects[i] = Util.FindChild<T>(gameObject, names[i], true);
 
@@ -37,9 +37,9 @@ public class UI_Base : MonoBehaviour
         return objects[idx] as T;
     }
 
-    protected Text GetText(int idx) { return Get<Text>(idx); }
+    protected Text   GetText(int idx) { return Get<Text>(idx); }
     protected Button GetButton(int idx) { return Get<Button>(idx); }
-    protected Image GetImage(int idx) { return Get<Image>(idx); }
+    protected Image  GetImage(int idx) { return Get<Image>(idx); }
 
     public static void AddUIEvent(GameObject go, Action<PointerEventData> action, Define.UIEvent type = Define.UIEvent.Click)
     {
