@@ -10,7 +10,6 @@ public class UI_Main : UI_Popup
 {
     enum Buttons
     {
-        DeleteButton,
         RetryButton,
     }
 
@@ -55,11 +54,10 @@ public class UI_Main : UI_Popup
 
         Get<GameObject>((int)GameObjects.Alive).SetActive(true);
         Get<GameObject>((int)GameObjects.Dead).SetActive(false);
-        GetButton((int)Buttons.DeleteButton).gameObject.AddUIEvent(OnClickDeleteHp);
         GetButton((int)Buttons.RetryButton).gameObject.AddUIEvent(OnClickRetry);
     }
 
-    public void OnClickDeleteHp(PointerEventData data)
+    public void OnDeleteHp(PointerEventData data)
     {
         Managers.UI.playerHp--;
 
