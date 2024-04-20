@@ -18,21 +18,8 @@ public class PlayerAtt : MonoBehaviour
         anim = GetComponent<Animator>();
     }
 
-    IEnumerator Att()
-    {
-        while (true)
-        {
-            yield return new WaitUntil(() => Input.GetMouseButtonDown(0));
-            yield return new WaitForSeconds(_delaytime);
-
-            _delaytime = 0;
-            FindNealMonster();
-        }
-    }
-
     public void MouseClick()
     {
-        print("ss");
         if (Input.GetMouseButtonDown(0))
         {
             FindNealMonster();

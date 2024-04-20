@@ -15,6 +15,9 @@ public class Monster : MonoBehaviour
 
     private Player _player;
     private MainHp _main;
+
+    private float _MainHp = 3;
+
     private bool _isAtt = false;
     private bool _isMiss = false;
     private bool _isAttMain = false;
@@ -27,8 +30,8 @@ public class Monster : MonoBehaviour
     {
         _player = FindObjectOfType<Player>();
         _main = FindObjectOfType<MainHp>();
-
         _isStop = false;
+
         StartCoroutine(MonsterMove());
         StartCoroutine(DamageToPlayer());
         StartCoroutine(DamageToMain());
@@ -39,9 +42,7 @@ public class Monster : MonoBehaviour
 
         while (true)
         {
-            yield return new WaitForSeconds(_stopTime);
-
-            if (!_isStop)
+            if (GameManager.Instance._isClick)
             {
                 Vector3 toPlayer = (_main.transform.position - transform.position).normalized;
 
@@ -49,19 +50,22 @@ public class Monster : MonoBehaviour
                     toPlayer.x = Mathf.Ceil(toPlayer.x);
                 else
                     toPlayer.x = Mathf.FloorToInt(toPlayer.x);
+
                 toPlayer *= 2;
                 toPlayer.y = 0;
 
                 transform.position += toPlayer;
-                _isStop = false;
+                StopRay();
+                yield return new WaitForSeconds(_stopTime);
             }
+            yield return null;
         }
     }
 
     private void Update()
     {
+        print(_MainHp);
         _curPos = transform.position;
-        StopRay();
     }
 
     private void StopRay()
@@ -71,13 +75,11 @@ public class Monster : MonoBehaviour
 
         if (playerDis < 3f && !_isMiss)
         {
-            _isStop = true;
             _isAtt = true;
         }
-        else if (dis < 3f)
+        else if (dis < 1f)
         {
             //게임 종료
-            _isStop = true;
             _isAttMain = true;
         }
         else
@@ -89,11 +91,17 @@ public class Monster : MonoBehaviour
         while (true)
         {
             yield return new WaitUntil(() => _isAttMain);
-            yield return new WaitForSeconds(_stunTime);
+            yield return new WaitUntil(() => GameManager.Instance._isClick);
 
-            SceneManager.LoadScene("Ending");
+            _MainHp--;
 
-            yield break;
+            if (_MainHp == 0)
+            {
+                SceneManager.LoadScene("Ending");
+                yield break;
+            }
+
+            yield return new WaitForSeconds(_stopTime);
         }
     }
 

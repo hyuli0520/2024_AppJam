@@ -4,9 +4,10 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
-
     private int _curTile;
     private int _tileCount;
+
+    private bool _isMove = true;
 
     private void Start()
     {
@@ -18,22 +19,28 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.A))
+        if (GameManager.Instance._isClick && _isMove)
         {
-            if (_curTile < _tileCount - 1)
-                _curTile++;
+            if (Input.GetKeyDown(KeyCode.A))
+            {
+                if (_curTile < _tileCount - 1)
+                    _curTile++;
 
-            transform.position = tilePos();
+                transform.position = tilePos();
+            }
+
+            if (Input.GetKeyDown(KeyCode.D))
+            {
+                if (_curTile > 0)
+                    _curTile--;
+
+                transform.position = tilePos();
+            }
+
+            _isMove = false;
         }
-
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            if (_curTile > 0)
-                _curTile--;
-
-            transform.position = tilePos();
-        }
-
+        else
+            _isMove = true;
     }
 
     private Vector3 tilePos()
