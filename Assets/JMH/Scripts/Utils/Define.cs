@@ -4,6 +4,14 @@ using UnityEngine;
 
 public class Define : MonoBehaviour
 {
+    public enum Scene
+    {
+        Unkown,
+        Start,
+        Game,
+        Rank,
+    }
+
     public enum UIEvent
     {
         Click,

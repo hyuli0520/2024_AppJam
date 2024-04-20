@@ -3,12 +3,11 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class UI_Main : UI_Popup
 {
-    public int playerHp = 3;
-
     enum Buttons
     {
         DeleteButton,
@@ -36,6 +35,8 @@ public class UI_Main : UI_Popup
         PlayerHpBorder1,
         PlayerHpBorder2,
         PlayerHpBorder3,
+        ItemBackgournd,
+        ItemIcon,
     }
 
     private void Start()
@@ -60,13 +61,15 @@ public class UI_Main : UI_Popup
 
     public void OnClickDeleteHp(PointerEventData data)
     {
-        playerHp--;
+        Managers.UI.playerHp--;
 
-        if (playerHp == 2)
+        Debug.Log($"버튼 클릭됨 남은 체력 : {Managers.UI.playerHp}");
+
+        if (Managers.UI.playerHp == 2)
             GetImage((int)Images.PlayerHp3).gameObject.SetActive(false);
-        if (playerHp == 1)
+        if (Managers.UI.playerHp == 1)
             GetImage((int)Images.PlayerHp2).gameObject.SetActive(false);
-        if (playerHp == 0)
+        if (Managers.UI.playerHp == 0)
         {
             GetImage((int)Images.PlayerHp1).gameObject.SetActive(false);
             Get<GameObject>((int)GameObjects.Alive).SetActive(false);
@@ -78,4 +81,5 @@ public class UI_Main : UI_Popup
     {
         Debug.Log("Retry");
     }
+
 }

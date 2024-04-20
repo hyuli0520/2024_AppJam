@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class UIManager
 {
+    public int playerHp = 3;
     int _order = 10;
 
     Stack<UI_Popup> _popupStack = new Stack<UI_Popup>();
