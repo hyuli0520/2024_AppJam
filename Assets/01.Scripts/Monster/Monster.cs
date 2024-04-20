@@ -16,8 +16,6 @@ public class Monster : MonoBehaviour
     private Player _player;
     private MainHp _main;
 
-    private float _MainHp = 3;
-
     private bool _isAtt = false;
     private bool _isMiss = false;
     private bool _isAttMain = false;
@@ -64,7 +62,7 @@ public class Monster : MonoBehaviour
 
     private void Update()
     {
-        print(_MainHp);
+        print(Managers.UI.playerHp);
         _curPos = transform.position;
     }
 
@@ -93,11 +91,13 @@ public class Monster : MonoBehaviour
             yield return new WaitUntil(() => _isAttMain);
             yield return new WaitUntil(() => GameManager.Instance._isClick);
 
-            _MainHp--;
+            //Managers.UI.playerHp--;
 
-            if (_MainHp == 0)
+            Destroy(this.gameObject);
+
+            if (Managers.UI.playerHp == 0)
             {
-                SceneManager.LoadScene("Ending");
+                Managers.Scene.LoadScene(Define.Scene.Start);
                 yield break;
             }
 
